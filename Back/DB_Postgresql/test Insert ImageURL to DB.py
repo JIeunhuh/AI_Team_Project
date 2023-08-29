@@ -1,4 +1,5 @@
 # Img url ~> insert DB
+# image 경로 api로 boot에 넘겨주기
 from flask import Flask, request, jsonify, send_file
 # from flask_sqlalchemy import SQLAlchemy
 import psycopg2
