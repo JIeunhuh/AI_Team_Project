@@ -1,4 +1,5 @@
 import papercup from '../../images/yellow-cups-6576738_1280_1.png'
+import {Icon} from '../../Component'
 
 export function Section1() {
   return (
@@ -9,6 +10,7 @@ export function Section1() {
         <br />
         <button></button>
       </p>
+      <Icon name="arrow_downward" className="absolute bottom-6 animate-bounce font-bold text-3xl" />
     </div>
   )
 }

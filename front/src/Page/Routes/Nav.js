@@ -10,6 +10,9 @@ export function Nav() {
         </Link>
       </div>
       <div className="flex justify-end items-center">
+        <Link to="/static">
+          <p className="w-[120px] h-full text-2xl text-center align-middle text-black">통계보기</p>
+        </Link>
         <Link to="/login">
           <p className="w-[120px] h-full text-2xl text-center align-middle text-black">로그인</p>
         </Link>
