@@ -18,14 +18,14 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	// sign in
 	@Override
 	public UserEntity getUser(UserEntity user) {
-		// find user	
+		// find user
 		Optional<UserEntity> findUser = userRepo.findByUsername(user.getUsername());
 		// user가 DB에 있으면 정보 가져옴
-		if(findUser.isPresent())
+		if (findUser.isPresent())
 			return findUser.get();
 		return null;
 	}
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(user.getEmail());
 		user.setBirth(user.getBirth());
 		user.setAuthority("ROLE_MEMBER");
-		
+
 		userRepo.save(user);
 	}
 
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	// authenticate
 	@Override
 	public UserEntity authenticate(String id, String pw) {

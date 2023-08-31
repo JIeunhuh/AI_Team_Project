@@ -2,19 +2,17 @@ package edu.pnu.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import edu.pnu.domain.Recycling;
-import edu.pnu.persistence.RecyclingRepository;
 
-@Service
-public class RecyclingService {
+// @Service
+public interface RecyclingService {
 
-	@Autowired
-	RecyclingRepository recycleRepo;
-	
-	public List<Recycling> getAllRecyclings(){
-		return recycleRepo.findAll();
-	}
+	public List<Recycling> getAllRecyclings();
+
+	public List<Recycling> getRecycleType();
+
+	public List<Recycling> getEachTime();
+
+	public List<Recycling> getEachDay();
+
 }

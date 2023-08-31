@@ -2,8 +2,11 @@
 
 package edu.pnu.domain;
 
-
 import java.time.LocalDate;
+
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,9 +24,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-@Getter
 @Setter
-@Table(name="user_db")
+@Getter
+@Table(name = "user_db")
 public class UserEntity {
     @Id
     private String username;
@@ -35,5 +38,9 @@ public class UserEntity {
     private String email;
     private LocalDate birth;
     private String authority;
+
+    // public Collection<? extends GrantedAuthority> getAuthority() {
+    // return AuthorityUtils.createAuthorityList(authority);
+    // }
 
 }

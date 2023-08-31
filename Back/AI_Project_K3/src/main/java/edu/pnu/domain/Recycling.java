@@ -1,11 +1,10 @@
 package edu.pnu.domain;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,17 +26,17 @@ import lombok.ToString;
 public class Recycling {
 	@Id
 	// Auto - Increment
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long detect_log_id;
 	private Integer device_id;
 	private String ai_result;
 	private LocalDate date;
 	@Column(columnDefinition = "time")
-	private String time;
+	private LocalTime time;
 	private Boolean state;
 	private Integer ce;
-	private Integer  rm;
+	private Integer rm;
 	private String reason;
 	private String img_url;
-	
+
 }
