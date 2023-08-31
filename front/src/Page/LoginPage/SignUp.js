@@ -5,8 +5,8 @@ import axios from 'axios'
 
 export function SignUp() {
   const [data, setData] = useState({
-    user_id: '',
-    user_pw: '',
+    username: '',
+    password: '',
     user_pw_chk: '',
     name: '',
     email: '',
@@ -30,6 +30,7 @@ export function SignUp() {
       .then(response => console.log(response.data))
       .catch(error => error.message)
   }
+  console.log('pw',data);
 
   return (
     <section className="flex flex-col items-center justify-center w-full h-screen bg-gray-100">
@@ -38,14 +39,14 @@ export function SignUp() {
         <div className="flex flex-col items-center">
           <Input
             type="text"
-            name="user_id"
+            name="username"
             placeholder="아이디"
             className="m-4"
             onChange={event => DataOnChange(event)}
           />
           <Input
             type="password"
-            name="user_pw"
+            name="password"
             placeholder="비밀번호"
             className=""
             onChange={event => DataOnChange(event)}

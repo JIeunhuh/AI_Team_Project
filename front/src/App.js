@@ -1,3 +1,4 @@
+import { FileUpload } from './Component'
 import {Login} from './Page/LoginPage/Login'
 import {RouteMain} from './Page/Routes/RouteMain'
 
@@ -9,7 +10,7 @@ function App() {
   return (
     <div className="w-full h-full">
       {/* <Login /> */}
-      <RouteMain />
+      <FileUpload/>
     </div>
   )
 }

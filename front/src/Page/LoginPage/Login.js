@@ -9,13 +9,14 @@ export const Login = () => {
   // 로그인 버튼 클릭 시
   const SignInBtnClicked = () => {
     axios
-      .post('http://10.125.121.177:8080/login', {
-        Username: user_Id,
-        Password: pw
+      .post('http://localhost:8080/login', {
+        username : user_Id,
+        password: pw
       })
-      .then(response => response.json())
-      .then(data => console.log('data: ', data))
-      .catch(error => error.message)
+     .then((response)=>{
+      console.log('resp', response);
+      alert('로그인 성공');
+     })
   }
   console.log('id', user_Id)
   console.log('pw', pw)
