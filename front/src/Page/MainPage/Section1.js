@@ -3,14 +3,21 @@ import {Icon} from '../../Component'
 
 export function Section1() {
   return (
-    <div className="w-full h-screen relative top-0 flex items-center justify-center">
-      <img src={papercup} className="w-full h-full absolute top-0 object-cover" />
-      <p className="w-[733px] h-[172px] bg-white opacity-50 absolute rounded-lg text-6xl text-center text-white">
-        <span className="w-full text-6xl text-center text-black">Recycling wow....</span>
+    <div className="relative top-0 flex items-center justify-center w-full h-screen">
+      <img src={papercup} className="absolute top-0 object-cover w-full h-full" />
+      <p className="w-[550px] h-[198px] absolute left-[265px] top-[388px] text-[99px] text-left text-[#46a46c]">
+        <span className="w-[550px] h-[198px] text-[99px] text-left text-[#46a46c] font-porter-sans">ECO</span>
         <br />
-        <button></button>
+        <span className="w-[550px] h-[198px] text-[99px] text-left text-[#46a46c]">TRACE</span>
       </p>
-      <Icon name="arrow_downward" className="absolute bottom-6 animate-bounce font-bold text-3xl" />
+      <p className="absolute left-[845px] top-[388px] text-left text-white">
+        <span className="text-[38px] font-semibold text-left text-white">Tracing</span>
+        <span className="text-[40px] text-left text-white"> </span>
+        <span className="text-[34px] font-light text-left text-white">the Green Path of</span>
+        <br />
+        <span className="text-[38px] font-semibold text-left text-white">Recycling</span>
+      </p>
+      <Icon name="arrow_downward" className="absolute text-3xl font-bold bottom-6 animate-bounce" />
     </div>
   )
 }
