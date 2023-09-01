@@ -3,7 +3,7 @@ package edu.pnu.dto;
 import edu.pnu.domain.RecycleRes;
 
 
-public class RecycleResDTO {
+public class RecycleDTO {
 	private final Long id;
 	private final String category;
 	private final Integer count;  
