@@ -1,1 +1,0 @@
-INDEX VERSION 1.131+C:\AI_Team_Project\Back\AI_Project_K3\.metadata\.plugins\org.eclipse.jdt.core

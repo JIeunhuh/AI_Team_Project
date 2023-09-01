@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.pnu.service.CSVUploadService;
+import edu.pnu.service.FileUploadServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 // restcontroller : RESTAPI를 위한 데이터를 반환하는 컨트롤러
@@ -16,12 +16,26 @@ import lombok.RequiredArgsConstructor;
 // @RequestMapping("/upload")
 public class FileUploadController {
 
-	private final CSVUploadService uploadCSVService;
+	private final FileUploadServiceImpl fileUploadService;
 
 	// @CrossOrigin(origins = "http://localhost:3000")
-	@PostMapping("/file")
+	@PostMapping("/fileupload")
 	public String uploadCSVFile(@RequestParam("file") MultipartFile file) {
-		return uploadCSVService.uploadCSV(file);
+		if (!file.isEmpty()) {
+			try {
+				if (file.getOriginalFilename().endsWith(".csv")) {
+					// CSV 파일 처리 로직
+					return fileUploadService.uploadCSV(file);
+				} else if (file.getOriginalFilename().endsWith(".xlsx")
+						|| file.getOriginalFilename().endsWith(".xls")) {
+					// 엑셀 파일 처리 로직
+					return fileUploadService.uploadExcel(file);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "Error occured : " + e.getMessage();
+			}
+		}
+		return "error ! Excel 파일만 업로드 가능합니다";
 	}
-
 }

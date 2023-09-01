@@ -4,10 +4,6 @@ package edu.pnu.domain;
 
 import java.time.LocalDate;
 
-import java.util.Collection;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,15 +13,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
-@Setter
-@Getter
 @Table(name = "user_db")
 public class UserEntity {
     @Id

@@ -14,7 +14,7 @@ export const FileUpload = () => {
     formData.append('file', file)
 
     try {
-     let url = 'http://localhost:8080/file';
+     let url = 'http://localhost:8080/fileupload';
 
       // fetch data
       await axios.post(url,formData)
