@@ -134,7 +134,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 					columns.set(4, sb.toString());
 				}
 				LocalTime time = LocalTime.parse(columns.get(4));
-				Boolean state = Boolean.valueOf(columns.get(5));
+				String state = columns.get(5);
 				Integer ce = columns.get(6).isEmpty() ? 0 : Integer.parseInt(columns.get(6));
 				Integer rm = columns.get(7).isEmpty() ? 0 : Integer.parseInt(columns.get(7));
 				String reason = columns.get(8);
@@ -173,7 +173,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 //				}	-> problem : 객체를 반복문안에서 계속 사용하므로 새 객체가 계속 생성됨?
 
 				// save result_list DB
-
+				// db에 추가 안됨 와이..
 				for (String key : parseData.keySet()) {
 					RecycleRes res = new RecycleRes();
 					System.out.println(parseData);
@@ -227,8 +227,13 @@ public class FileUploadServiceImpl implements FileUploadService {
 					Long detectLog = (long) detectLogId; 
 					double deviceID = deviceId.getNumericCellValue();
 					Long detect_Id = (long) deviceID;
+					//=======
 					String ai_res = jsonStr.getStringCellValue();
-					LocalDate dates = LocalDate.parse(date.getStringCellValue());
+					Double numericDate = date.getNumericCellValue();
+					// 여기에 이상한 값이 들어가있음?? 오잉 도잉
+					String StrDate = String.valueOf(numericDate);
+					LocalDate dates = LocalDate.parse(StrDate);
+					//=======
 					// 시간 데이터 형식 맞추기
 					LocalTime times;
 					if (time.getCellType() == CellType.STRING) {
@@ -279,7 +284,11 @@ public class FileUploadServiceImpl implements FileUploadService {
 					for (String key : parseData.keySet()) {
 						RecycleRes res = new RecycleRes();
 						res.setDetect_log_id(detectLog);
-						res.setCategory(key);
+						if (key == null || key.isEmpty()) {
+						    res.setCategory(null);
+						} else {
+						    res.setCategory(key);
+						}
 						res.setCount(parseData.get(key));
 
 						recycleResRepo.save(res);
