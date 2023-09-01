@@ -228,7 +228,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 					double deviceID = deviceId.getNumericCellValue();
 					Long detect_Id = (long) deviceID;
 					String ai_res = jsonStr.getStringCellValue();
-					LocalDate dates = date.getLocalDateTimeCellValue().toLocalDate();
+					LocalDate dates = LocalDate.parse(date.getStringCellValue());
 					// 시간 데이터 형식 맞추기
 					LocalTime times;
 					if (time.getCellType() == CellType.STRING) {
@@ -250,9 +250,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 						}
 						times = LocalTime.parse(timeString);
 					} else {
-						times = time.getLocalDateTimeCellValue().toLocalTime();
+						times = LocalTime.parse(time.getStringCellValue());
 					}
-					Boolean states = state.getBooleanCellValue();
+					String states = state.getStringCellValue();
 					Integer ce_1 = (int) ce.getNumericCellValue();
 					Integer rm_1 = (int) rm.getNumericCellValue();
 					String reasons = reason.getStringCellValue();

@@ -32,7 +32,7 @@ public class Recycling {
 	private LocalDate date;
 	@Column(columnDefinition = "time")
 	private LocalTime time;
-	private Boolean state;
+	private String state;
 	private Integer ce;
 	private Integer rm;
 	private String reason;
