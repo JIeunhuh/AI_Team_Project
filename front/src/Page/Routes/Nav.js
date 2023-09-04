@@ -3,29 +3,38 @@ import {Link} from 'react-router-dom'
 
 export function Nav() {
   return (
-    <nav className="w-full h-[70px] fixed z-50 border border-black flex justify-between items-center">
-      <div>
+    <nav className="w-full h-[70px] fixed z-50 flex justify-between items-center">
+      <div className="w-1/4">
         <Link to="/">
           <p>logo</p>
         </Link>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center w-2/4">
         <Link to="/static">
-          <p className="w-[120px] h-full text-2xl text-center align-middle text-black">통계</p>
+          <p className="h-full text-2xl font-semibold text-center text-black align-middle mr-14 font-poppins">통계</p>
         </Link>
         <Link to="/result">
-          <p className="w-[120px] h-full text-2xl text-center align-middle text-black">자료 조회</p>
+          <p className="h-full text-2xl font-semibold text-center text-black align-middle mr-14 font-poppins">
+            자료 조회
+          </p>
         </Link>
-        <Link to="/result">
-          <p className="w-[120px] h-full text-2xl text-center align-middle text-black">고객센터</p>
+        <Link to="/guide">
+          <p className="h-full text-2xl font-semibold text-center text-black align-middle mr-14 font-poppins">
+            Guide & Tip
+          </p>
+        </Link>
+        <Link to="/customer">
+          <p className="h-full text-2xl font-semibold text-center text-black align-middle mr-14 font-poppins">
+            고객센터
+          </p>
         </Link>
       </div>
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-center w-1/4">
         <Link to="/login">
-          <p className="w-[120px] h-full text-2xl text-center align-middle text-black">로그인</p>
+          <p className="h-full mr-8 text-lg text-center text-black align-middle font-Inconsolata ">SIGN IN</p>
         </Link>
         <Link to="/signup">
-          <p className="w-[120px] h-full text-2xl text-center align-middle text-black">회원가입</p>
+          <p className="h-full text-lg text-center text-black align-middle font-Inconsolata">SIGN UP</p>
         </Link>
       </div>
     </nav>

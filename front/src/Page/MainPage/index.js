@@ -1,7 +1,7 @@
 // 메인 페이지
-import {Section1} from './Section1'
-import {Section2} from './Section2'
-import {Section3} from './Section3'
+import {IntroSection} from './IntroSection'
+import {TypeRecylingSection} from './TypeRecylingSection'
+import {GuideSection} from './GuideSection'
 import {useEffect, useState, useRef} from 'react'
 
 export default function MainPage() {
@@ -42,6 +42,7 @@ export default function MainPage() {
 
   // 마우스 휠 이벤트
   useEffect(() => {
+    // console.log(currentSection)
     if (mainDivRef.current) {
       setTimeout(() => {
         mainDivRef.current.addEventListener('wheel', MouseWheelScroll, {passive: false})
@@ -56,10 +57,10 @@ export default function MainPage() {
 
   return (
     <div className="w-full h-full">
-      <div ref={mainDivRef} className="relative overflow-hidden h-screen">
-        <Section1 />
-        <Section2 />
-        <Section3 />
+      <div ref={mainDivRef} className="relative h-screen overflow-hidden">
+        <IntroSection currentSection={currentSection} />
+        <TypeRecylingSection currentSection={currentSection} />
+        <GuideSection currentSection={currentSection} />
       </div>
       <div className="fixed flex flex-col bottom-1/2 left-4">
         <button className="mr-4" onClick={() => scrollToSection(1)}>
