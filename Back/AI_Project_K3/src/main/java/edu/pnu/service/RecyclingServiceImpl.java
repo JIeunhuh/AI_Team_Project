@@ -1,12 +1,14 @@
 package edu.pnu.service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import edu.pnu.domain.RecycleRes;
+import edu.pnu.domain.RecycleStaticsProjection;
 import edu.pnu.domain.Recycling;
+import edu.pnu.dto.RecycleDTO;
 import edu.pnu.persistence.RecycleResultRepository;
 import edu.pnu.persistence.RecyclingRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +27,21 @@ public class RecyclingServiceImpl implements RecyclingService {
     }
 
     @Override
-    public Optional<RecycleRes> getRecycleType(String type) {
-       return recycleResRepo.findByCategory(type);
+    public List<RecycleDTO> getRecycleType(String type) {	
+    	 List<RecycleStaticsProjection> projections = recycleRepo.findRecycleStatisticsByCategory(type);
+       return projections.stream().map(RecycleDTO::from).collect(Collectors.toList());
     }
 
     @Override
-    public List<Recycling> getEachTime() {
+    public List<RecycleDTO> getEachTime() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEachTime'");
     }
 
 	@Override
-	public List<Recycling> getEachDay(String Day) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RecycleDTO> getEachDay(LocalDate day) {
+		List<RecycleStaticsProjection> projections = recycleRepo.findRecycleStaticsProjectionsByDate(day);
+		return projections.stream().map(RecycleDTO::from).collect(Collectors.toList());
 	}
 
 }
