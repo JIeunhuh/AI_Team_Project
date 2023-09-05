@@ -1,10 +1,13 @@
 package edu.pnu.service;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,12 +20,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.pnu.domain.ImageEntity;
 import edu.pnu.domain.RecycleRes;
 import edu.pnu.domain.Recycling;
+import edu.pnu.persistence.ImageRepository;
 import edu.pnu.persistence.RecycleResultRepository;
 import edu.pnu.persistence.RecyclingRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,15 +80,17 @@ public class FileUploadServiceImpl implements FileUploadService {
 	// json형태의 column은 나머지 기호 다 제거하고 str, int 형으로 각각 저장
 	private Map<String, Integer> parseJsonString(String jsonStr) {
 		Map<String, Integer> result = new HashMap<>();
-		if (jsonStr != null && jsonStr.startsWith("{") && jsonStr.endsWith("}")) {
-			jsonStr = jsonStr.substring(1, jsonStr.length() - 1);
-			String[] keyValuePairs = jsonStr.split(",");
+		if(jsonStr == null) {result.put("etc", 0); return result;}
+		String jsonStr1 = jsonStr.replace("\"", "");
+		if (jsonStr1.equals("{}") || !jsonStr1.startsWith("{") || !jsonStr1.endsWith("}")) {
+			result.put("etc", 0);
+		} else{
+			jsonStr1 = jsonStr1.substring(1, jsonStr1.length() - 1);
+			String[] keyValuePairs = jsonStr1.split(",");
 			for (String pair : keyValuePairs) {
 				String[] keyValue = pair.split(":");
 				if (keyValue.length == 2) {
-					String key = keyValue[0].replaceAll("\"", "").trim();
-					Integer value = Integer.parseInt(keyValue[1].trim());
-					result.put(key, value);
+					result.put(keyValue[0].trim(), Integer.parseInt(keyValue[1].trim()));
 				}
 			}
 		}
@@ -161,6 +169,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 				// call parseJsonStr
 				Map<String, Integer> parseData = parseJsonString(jsonStr);
+				System.out.println("parseData : " + parseData);
 
 				// save result_list DB
 //				RecycleRes res = new RecycleRes();
@@ -174,14 +183,21 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 				// save result_list DB
 				// db에 추가 안됨 와이..
+				// RecycleRes 엔티티 저장
 				for (String key : parseData.keySet()) {
 					RecycleRes res = new RecycleRes();
-					System.out.println(parseData);
-					res.setCategory(key);
+					res.setDetect_log_id(detect_log_id);
+					if (key == null || key.isEmpty()) {
+						res.setCategory(null);
+					} else if (key == "{}") {
+						res.setCategory(null);
+					} else {
+						res.setCategory(key);
+					}
 					res.setCount(parseData.get(key));
-					res.setDetect_log_id(device_id);
 
 					recycleResRepo.save(res);
+					System.out.println("res : " + res);
 				}
 
 			}
@@ -203,14 +219,14 @@ public class FileUploadServiceImpl implements FileUploadService {
 				&& (file.getOriginalFilename().endsWith(".xlsx") || file.getOriginalFilename().endsWith(".xls"))) {
 			try (InputStream inputStream = file.getInputStream()) {
 				Workbook workbook = new XSSFWorkbook(inputStream);
-				
+
 				Sheet sheet = workbook.getSheetAt(0);
 				Iterator<Row> rowIter = sheet.iterator();
-				if(rowIter.hasNext()) {
+				if (rowIter.hasNext()) {
 					rowIter.next();
 				}
 				// 엑셀 셀 데이터 타입에 따라 처리
-				while(rowIter.hasNext()){
+				while (rowIter.hasNext()) {
 					Row row = rowIter.next();
 					Cell detectLogID = row.getCell(0);
 					Cell deviceId = row.getCell(1);
@@ -224,16 +240,16 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 					// 셀 데이터를 추출하여 필요한 처리를 수행
 					double detectLogId = detectLogID.getNumericCellValue();
-					Long detectLog = (long) detectLogId; 
+					Long detectLog = (long) detectLogId;
 					double deviceID = deviceId.getNumericCellValue();
 					Long detect_Id = (long) deviceID;
-					//=======
+					// =======
 					String ai_res = jsonStr.getStringCellValue();
 					Double numericDate = date.getNumericCellValue();
 					// 여기에 이상한 값이 들어가있음?? 오잉 도잉
-					String StrDate = String.valueOf(numericDate);
-					LocalDate dates = LocalDate.parse(StrDate);
-					//=======
+					LocalDate dates = LocalDate.parse(date.getStringCellValue(),
+							DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+					// =======
 					// 시간 데이터 형식 맞추기
 					LocalTime times;
 					if (time.getCellType() == CellType.STRING) {
@@ -253,9 +269,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 							}
 							timeString = sb.toString();
 						}
-						times = LocalTime.parse(timeString);
+						times = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm:ss"));
 					} else {
-						times = LocalTime.parse(time.getStringCellValue());
+						times = LocalTime.parse(time.getStringCellValue(), DateTimeFormatter.ofPattern("HH:mm:ss"));
 					}
 					String states = state.getStringCellValue();
 					Integer ce_1 = (int) ce.getNumericCellValue();
@@ -285,9 +301,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 						RecycleRes res = new RecycleRes();
 						res.setDetect_log_id(detectLog);
 						if (key == null || key.isEmpty()) {
-						    res.setCategory(null);
+							res.setCategory(null);
 						} else {
-						    res.setCategory(key);
+							res.setCategory(key);
 						}
 						res.setCount(parseData.get(key));
 
@@ -302,8 +318,47 @@ public class FileUploadServiceImpl implements FileUploadService {
 				e.printStackTrace();
 				return "Error occurred : " + e.getMessage();
 			}
-		}else {
+		} else {
 			return "Invalid Excel File";
 		}
 	}
+	
+	// Image Upload 
+	@Value("${upload.directory}")
+	private String uploadDirectory; // 이미지를 저장할 경로
+
+	private final ImageRepository imageRepo;
+
+	@Override
+	public String imageUpload(MultipartFile file) {
+
+		// 이미지를 서버에 저장하고 이미지 URL을 반환
+		String imageFileName = file.getOriginalFilename();
+		String imagePath = uploadDirectory + File.separator + imageFileName;
+
+		// 이미지 저장
+		try {
+			file.transferTo(new File(imagePath));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			System.out.println("error occured : " + e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("error occured : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		// 이미지 URL 생성
+		String imageUrl = "http://localhost:8080/images/" + imageFileName;
+
+		ImageEntity img = new ImageEntity();
+		img.setImageUrl(imageUrl);
+		img.setImageName(imageFileName);
+
+		imageRepo.save(img);
+
+		return "upload Success";
+	}
+	
 }
