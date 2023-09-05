@@ -5,7 +5,7 @@ import java.util.List;
 import edu.pnu.domain.UserEntity;
 
 public interface UserService {
-	UserEntity getUser(UserEntity user);
+	String getUser(UserEntity user);
 	void createUser(UserEntity user);
 	List<UserEntity> getAllUsers();
 	UserEntity authenticate(String id, String pw);

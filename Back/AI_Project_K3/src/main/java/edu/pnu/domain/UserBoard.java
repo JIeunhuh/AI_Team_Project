@@ -3,6 +3,7 @@ package edu.pnu.domain;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,8 @@ public class UserBoard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String user_id;
+	@Column(name = "user_id")
+	private String userid;
 	private String title;
 	private String content;
 	private LocalDate date;
