@@ -31,10 +31,14 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> {
             authorize
                     .requestMatchers("/member/**").authenticated()
-                    .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                    .requestMatchers("/manager/**" ).hasAnyRole("MANAGER", "ADMIN")
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     // 권한 설정 추가 기억이겅 !!
-                    .requestMatchers("/fileupload", "/readAllRecycle", "/signup", "/login", "/type").permitAll()
+                    .requestMatchers("/image",
+                    		"/signup", "/login", 
+                    		"/fileupload", "/statistics/**",
+                    		"/board/**", "/images/**",
+                    		"/comments/**",  "/boardList").permitAll()
                     .anyRequest().authenticated();
         });
 
