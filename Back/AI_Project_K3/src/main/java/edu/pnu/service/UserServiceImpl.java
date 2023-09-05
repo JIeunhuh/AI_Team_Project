@@ -20,13 +20,15 @@ public class UserServiceImpl implements UserService {
 
 	// sign in
 	@Override
-	public UserEntity getUser(UserEntity user) {
+	public String getUser(UserEntity user) {
 		// find user
 		Optional<UserEntity> findUser = userRepo.findByUsername(user.getUsername());
 		// user가 DB에 있으면 정보 가져옴
-		if (findUser.isPresent())
-			return findUser.get();
-		return null;
+		if (findUser.isPresent()) {
+			findUser.get();
+			return "login Success";
+		}
+		return "login Failed";
 	}
 
 	// sign up
