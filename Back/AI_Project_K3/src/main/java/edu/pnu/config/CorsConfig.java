@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // cors 허용
 @Configuration
 @EnableWebMvc //Spring Web MVC 구성을 명시
-public class WebConfig implements WebMvcConfigurer{
+public class CorsConfig implements WebMvcConfigurer{
 
 	  @Override
 	    public void addCorsMappings(CorsRegistry registry) {
