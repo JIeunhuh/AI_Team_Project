@@ -3,6 +3,10 @@
 package edu.pnu.domain;
 
 import java.time.LocalDate;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -33,8 +37,8 @@ public class UserEntity {
     private LocalDate birth;
     private String authority;
 
-    // public Collection<? extends GrantedAuthority> getAuthority() {
-    // return AuthorityUtils.createAuthorityList(authority);
-    // }
+     public Collection<? extends GrantedAuthority> getAuthority() {
+     return AuthorityUtils.createAuthorityList(authority);
+     }
 
 }

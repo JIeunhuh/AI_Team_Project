@@ -1,5 +1,8 @@
 package edu.pnu.domain;
 
+import java.time.LocalTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +27,11 @@ public class UserLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String user_id;
-	private String name;
+	
+	@Column(name = "user_id")
+	private String usernamd;
+	
 	private String log;
+	private String role;
+	private LocalTime time;
 }
