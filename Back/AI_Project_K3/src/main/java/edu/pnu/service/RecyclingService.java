@@ -1,6 +1,7 @@
 package edu.pnu.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import edu.pnu.domain.Recycling;
@@ -12,9 +13,9 @@ public interface RecyclingService {
 
 	public List<RecycleDTO> getRecycleType(String type);
 
-	public List<RecycleDTO> getEachTime();
+	public List<RecycleDTO> getEachTime(LocalTime time, LocalTime time2);
 
-	public List<RecycleDTO> getEachDay(LocalDate Day);
+	public List<RecycleDTO> getEachDay(LocalDate Day, LocalDate Day2);
 
 
 }

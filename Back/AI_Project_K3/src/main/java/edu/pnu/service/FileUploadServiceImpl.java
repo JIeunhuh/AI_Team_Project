@@ -358,7 +358,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 		imageRepo.save(img);
 
-		return "upload Success";
+		return imageUrl;
 	}
 	
 }
