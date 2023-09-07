@@ -1,6 +1,7 @@
 package edu.pnu.controller;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,15 +35,17 @@ public class RecycleController {
 	}
 
 	// 시간별 통계
-	@GetMapping("times/{time}")
-	public List<RecycleDTO> readEachTime() {
-		return recycleService.getEachTime();
+	@GetMapping("times/{time}/{time2}")
+	public List<RecycleDTO> readEachTime(@PathVariable @DateTimeFormat(pattern = "HH:mm:ss") LocalTime time,
+			@PathVariable @DateTimeFormat(pattern = "HH:mm:ss")LocalTime time2) {
+		return recycleService.getEachTime(time, time2);
 	}
 
 	// 일자별 통계
-	@GetMapping("days/{day}")
-	public List<RecycleDTO> readEachDay(@PathVariable  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
-		return recycleService.getEachDay(day);
+	@GetMapping("days/{day}/{day2}")
+	public List<RecycleDTO> readEachDay(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day,
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day2) {
+		return recycleService.getEachDay(day,day2);
 	}
 
 }

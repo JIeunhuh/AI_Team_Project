@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,7 +71,7 @@ public class FileUploadController {
 			System.out.println(resource);
 			if(resource.exists()) {
 				byte[] imageBytes = Files.readAllBytes(resource.getFile().toPath());
-				return ResponseEntity.ok().body(imageBytes);
+				return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
 			}
 		}
 		return ResponseEntity.notFound().build();
