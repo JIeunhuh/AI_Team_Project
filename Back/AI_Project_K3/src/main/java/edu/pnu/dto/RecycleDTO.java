@@ -18,7 +18,7 @@ public class RecycleDTO {
 	private final LocalDate date;
 	private final String category;
 	private final Integer count;
-	
+
 	public RecycleDTO(Integer rm, Integer ce, LocalDate date, LocalTime time, String category, Integer count) {
 
 		this.rm = rm;
@@ -28,16 +28,19 @@ public class RecycleDTO {
 		this.category = category;
 		this.count = count;
 	}
-	
-	//recyclestatisticsprojection -> recycleDTO로의 변환
-	 public static RecycleDTO from(RecycleStaticsProjection projection) {
-	        return new RecycleDTO(
-	            projection.getRm(),
-	            projection.getCe(),
-	            projection.getDate(),
-	            projection.getTime(),
-	            projection.getCategory(),
-	            projection.getCount()
-	        );
-	    }
+
+	public RecycleDTO(Object[] objs) {
+		rm = (Integer) objs[0];
+		ce = (Integer) objs[1];
+		time =  (LocalTime) objs[3];
+		date = (LocalDate) objs[2];
+		category = (String) objs[4];
+		count = (Integer) objs[5];
+	}
+
+	// recyclestatisticsprojection -> recycleDTO로의 변환
+	public static RecycleDTO from(RecycleStaticsProjection projection) {
+		return new RecycleDTO(projection.getRm(), projection.getCe(), projection.getDate(), projection.getTime(),
+				projection.getCategory(), projection.getCount());
+	}
 }
