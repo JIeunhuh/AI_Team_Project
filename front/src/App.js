@@ -1,8 +1,5 @@
-import { FileUpload } from './Component'
-import { Login } from './Page/LoginPage/Login'
-import MainPage from './Page/MainPage'
-import { RouteMain } from './Page/Routes/RouteMain'
-
+import {Login} from './Page/LoginPage/Login'
+import {RouteMain} from './Page/Routes/RouteMain'
 
 function App() {
   // const data = [25, 45, 60, 30, 10]
@@ -12,11 +9,9 @@ function App() {
   return (
     <div className="w-full h-full">
       {/* <Login /> */}
-      {/* <FileUpload/> */}
-      <MainPage />
+      <RouteMain />
     </div>
   )
 }
-
 
 export default App
