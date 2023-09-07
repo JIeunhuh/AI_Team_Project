@@ -2,7 +2,7 @@
 import numpy as np
 from tensorflow.python.keras.models import load_model
 import tensorflow as tf
-from tensorflow.python.keras_preprocessing.image import image
+from tensorflow.python.keras.processing import image
 from flask import Flask, request, jsonify
 
 captioning_model = load_model('./imagecaption.h5')
