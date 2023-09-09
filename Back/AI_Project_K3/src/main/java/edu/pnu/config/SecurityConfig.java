@@ -43,15 +43,15 @@ public class SecurityConfig {
             try {
 				authorize
 				        .requestMatchers("/member/**").authenticated()
-				        .requestMatchers("/manager/**", "/fileupload").hasAnyRole("MANAGER", "ADMIN")
-				        .requestMatchers("/admin/**","/fileupload").hasRole("ADMIN")
+				        .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+				        .requestMatchers("/admin/**").hasRole("ADMIN")
 				        // 권한 설정 추가 기억이겅 !!
 // get method 권한 인증 .requestMatchers(HttpMethod.GET, ".api URI").permitAll()
 				        .requestMatchers("/image",
 				        		"/signup", "/login", 
 				        		"/statistics/**",
 				        		"/board/**", "/images/**",
-				        		"/boardList","comments/**").permitAll()
+				        		"/boardList","comments/**","/fileupload").permitAll()
 				        .anyRequest().authenticated()
 				        .and().exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
 			} catch (Exception e) {

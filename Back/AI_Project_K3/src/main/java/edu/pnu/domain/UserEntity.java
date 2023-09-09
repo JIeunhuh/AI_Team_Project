@@ -8,7 +8,10 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -27,7 +30,11 @@ import lombok.Setter;
 @Table(name = "user_db")
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; 
+    @Column(name = "user_id")
     private String username;
+    @Column(name = "user_pw")
     private String password;
     @Transient
     // DB에 저장하지 않아도 됨. Test 후 DB 열 수정 예정.

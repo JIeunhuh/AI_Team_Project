@@ -21,8 +21,13 @@ public class RecyclingServiceImpl implements RecyclingService {
 	private final RecycleResultRepository recycleResRepo;
 
 	@Override
-	public List<Recycling> getAllRecyclings() {
-		return recycleRepo.findAll();
+	public List<RecycleDTO> getAllRecyclings() {
+		List<Object[]> list =  recycleRepo.findRecycleStatisticsAll();
+		List<RecycleDTO> ret = new ArrayList<>();
+		for(Object[] objs : list){
+			ret.add(new RecycleDTO(objs));
+		}
+		return ret;
 	}
 
 	@Override

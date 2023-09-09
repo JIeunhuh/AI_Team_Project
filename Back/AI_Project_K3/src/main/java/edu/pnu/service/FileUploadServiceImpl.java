@@ -146,7 +146,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 				Integer ce = columns.get(6).isEmpty() ? 0 : Integer.parseInt(columns.get(6));
 				Integer rm = columns.get(7).isEmpty() ? 0 : Integer.parseInt(columns.get(7));
 				String reason = columns.get(8);
-				String img_url = "";
+	
 
 				// gyo pt 에게 부탁..
 				// Parse Json data
@@ -163,7 +163,6 @@ public class FileUploadServiceImpl implements FileUploadService {
 				recycle.setCe(ce);
 				recycle.setRm(rm);
 				recycle.setReason(columns.get(8).isEmpty() ? null : reason);
-				recycle.setImg_url(img_url);
 
 				recyclingRepo.save(recycle);
 
@@ -247,13 +246,14 @@ public class FileUploadServiceImpl implements FileUploadService {
 					String ai_res = jsonStr.getStringCellValue();
 					Double numericDate = date.getNumericCellValue();
 					// 여기에 이상한 값이 들어가있음?? 오잉 도잉
-					LocalDate dates = LocalDate.parse(date.getStringCellValue(),
+					LocalDate dates = LocalDate.parse(numericDate.toString(),
 							DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 					// =======
 					// 시간 데이터 형식 맞추기
 					LocalTime times;
-					if (time.getCellType() == CellType.STRING) {
-						String timeString = time.getStringCellValue();
+					if (time.getCellType() == CellType.NUMERIC) {
+						Double timeN = time.getNumericCellValue();
+						String timeString = String.valueOf(timeN);
 						if (timeString.length() < 8) {
 							String[] tList = timeString.split(":");
 							StringBuilder sb = new StringBuilder();
@@ -271,7 +271,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 						}
 						times = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm:ss"));
 					} else {
-						times = LocalTime.parse(time.getStringCellValue(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+						times = LocalTime.parse(String.valueOf(time.getNumericCellValue()), DateTimeFormatter.ofPattern("HH:mm:ss"));
 					}
 					String states = state.getStringCellValue();
 					Integer ce_1 = (int) ce.getNumericCellValue();

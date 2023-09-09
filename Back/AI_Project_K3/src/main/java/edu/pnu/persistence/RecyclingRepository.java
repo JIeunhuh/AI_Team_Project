@@ -12,6 +12,13 @@ import edu.pnu.domain.Recycling;
 public interface RecyclingRepository extends JpaRepository<Recycling, String> {
 
 	// query method
+	// DTO 문제 
+	// @Query("select * " 
+	// 	+ " from Recycling tr"
+	// 	+ " join RecycleRes rl on tr.detect_log_id=rl.detect_log_id")
+
+	// List<Object[]> findRecycleStatisticsAll();
+
 	@Query("select tr.rm, tr.ce, tr.date, tr.time, rl.category, rl.count" 
 			+ " from Recycling tr"
 			+ " join RecycleRes rl on tr.detect_log_id=rl.detect_log_id" 

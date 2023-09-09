@@ -1,9 +1,11 @@
 package edu.pnu.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
@@ -35,6 +37,10 @@ public class FileUploadController {
 
 	private final ImageRepository imgRepo;
 
+	// Image Upload 
+	@Value("${upload.directory}")
+	private String uploadDirectory;
+
 	// @CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/fileupload")
 	public String uploadCSVFile(@RequestParam("file") MultipartFile file) {
@@ -61,13 +67,17 @@ public class FileUploadController {
 		String imageUrl = fileUploadService.imageUpload(imageFile);
 		return "Image registered successfully. Image URL: " + imageUrl;
 	}
+	
 
 	@GetMapping("/images/{filename}")
 	public ResponseEntity<byte[]> getImageUrl(@PathVariable String filename) throws IOException {
 		Optional<ImageEntity> imageOptional = imgRepo.findByImageName(filename);
 		if (imageOptional.isPresent()) {
 			String imageUrl = imageOptional.get().getImageUrl();
-			Resource resource = resourceLoader.getResource(imageUrl);
+			String imagePath = uploadDirectory + File.separator + filename;
+
+			// file:{imagepath} 형태로 넘겨줌
+			Resource resource = resourceLoader.getResource("file:"+imagePath);
 			System.out.println(resource);
 			if(resource.exists()) {
 				byte[] imageBytes = Files.readAllBytes(resource.getFile().toPath());

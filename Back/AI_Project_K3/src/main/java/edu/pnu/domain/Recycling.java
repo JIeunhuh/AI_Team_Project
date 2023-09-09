@@ -36,7 +36,7 @@ public class Recycling {
 	private Integer ce;
 	private Integer rm;
 	private String reason;
-	private String img_url;
+	
 
 //	@OneToOne(mappedBy = "total_recycle")
 //	private List<RecycleRes> res;
